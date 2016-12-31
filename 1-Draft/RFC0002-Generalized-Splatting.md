@@ -249,3 +249,29 @@ it's important to understand how a hash literal is to be used.
 The sigil makes it clear a hash literal is really specifying command arguments.
 Furthermore, the sigil simplifies the analysis required for good parameter completion,
 and does not require a complete expression to begin providing parameter name completion.
+
+### Splating Objects
+
+In some cases it might be useful to construct an object and then splat it when calling
+a function. Two examples that come to mind are ~Builder~ objects and recurring contexts.
+
+Builder objects would allow constructing a complex set of parameters with a syntax like:
+
+```
+$res = ResponseBuilder::new().
+  header('Content-Type', 'plain/text').
+  body($foo).
+  build()
+
+Send-HttpResponse @res
+```
+
+As proposed above, a syntax without the intermediate variable would be nice too
+
+```
+Send-HttpResponse @ResponseBuilder::new(). ...
+
+# or
+
+Send-HttpResponse @$(ResponseBuilder::new(). ...)
+```
